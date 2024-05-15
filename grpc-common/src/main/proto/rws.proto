@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package imnasser.projects.rws.grpc;
+
+option java_multiple_files = true;
+
+message GrpcFileSubscription {
+
+  string filePath = 1;
+  int32 events = 2;
+}
+
+message Empty {
+}
+
+message GrpcNotification {
+  string file = 1;
+  string context = 2;
+  int32 pendingEvents = 3;
+}
+
+message Path {
+  string path = 1;
+}
+
+service WatchService {
+
+  rpc register(Path) returns (GrpcFileSubscription);
+  rpc get(Empty) returns (stream GrpcNotification);
+}
